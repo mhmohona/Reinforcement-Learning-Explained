@@ -34,26 +34,26 @@ class SimpleRoomsEnv(Environment):
         # define reward structure
         self.R = [0] * len(self.S)
         self.R[15] = 1
-        
-        # define transitions
-        self.P = {}
-        self.P[0] = [1, 4]
-        self.P[1] = [0, 2, 5]
-        self.P[2] = [1, 3, 6]
-        self.P[3] = [2, 7]
-        self.P[4] = [0, 5, 8]
-        self.P[5] = [1, 4]
-        self.P[6] = [2, 7]
-        self.P[7] = [3, 6, 11]
-        self.P[8] = [4, 9, 12]
-        self.P[9] = [8, 13]
-        self.P[10] = [11, 14]
-        self.P[11] = [7, 10, 15]
-        self.P[12] = [8, 13]
-        self.P[13] = [9, 12, 14]
-        self.P[14] = [10, 13, 15]
-        self.P[15] = [11, 14]
 
+        # define transitions
+        self.P = {
+            0: [1, 4],
+            1: [0, 2, 5],
+            2: [1, 3, 6],
+            3: [2, 7],
+            4: [0, 5, 8],
+            5: [1, 4],
+            6: [2, 7],
+            7: [3, 6, 11],
+            8: [4, 9, 12],
+            9: [8, 13],
+            10: [11, 14],
+            11: [7, 10, 15],
+            12: [8, 13],
+            13: [9, 12, 14],
+            14: [10, 13, 15],
+            15: [11, 14],
+        }
         self.max_trajectory_length = 50
         self.tolerance = 0.1
         self._rendered_maze = self._render_maze()
@@ -84,9 +84,7 @@ class SimpleRoomsEnv(Environment):
         return s
 
     def single_reward(self, s, s_prev, rewards):
-        if s == s_prev:
-            return 0
-        return rewards[s]
+        return 0 if s == s_prev else rewards[s]
     
     def reset(self):
         self.nstep = 0
@@ -130,7 +128,7 @@ class SimpleRoomsEnv(Environment):
         return maze
 
     def render(self, mode = 'rgb_array'):
-        assert mode == 'rgb_array', 'Unknown mode: %s' % mode
+        assert mode == 'rgb_array', f'Unknown mode: {mode}'
         img = np.array(self._rendered_maze, copy=True)
 
         # draw current agent location

@@ -6,8 +6,7 @@ def get_state_count():
     return 15
 
 def get_available_actions(state):
-    actions = ["up", "down", "left", "right"]
-    return actions
+    return ["up", "down", "left", "right"]
 
 def get_transitions(state, action):
     next_state_num = next_state[(state, action)]

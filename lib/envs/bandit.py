@@ -24,23 +24,25 @@ class ActionSpace(object):
 class BanditEnv(Environment):
     def __init__(self, num_actions = 10, distribution = "bernoulli", evaluation_seed="387"):
         super(BanditEnv, self).__init__()
-        
+
         self.action_space = ActionSpace(range(num_actions))
         self.distribution = distribution
-        
+
         np.random.seed(evaluation_seed)
-        
+
         self.reward_parameters = None
-        if distribution == "bernoulli":
+        if (
+            distribution == "bernoulli"
+            or distribution != "normal"
+            and distribution == "heavy-tail"
+        ):
             self.reward_parameters = np.random.rand(num_actions)
         elif distribution == "normal":
             self.reward_parameters = (np.random.randn(num_actions), np.random.rand(num_actions))
-        elif distribution == "heavy-tail":
-            self.reward_parameters = np.random.rand(num_actions)
         else:
             print("Please use a supported reward distribution", flush = True)
             sys.exit(0)
-        
+
         if distribution != "normal":
             self.optimal_arm = np.argmax(self.reward_parameters)
         else:
@@ -51,11 +53,17 @@ class BanditEnv(Environment):
         return None
     
     def compute_gap(self, action):
-        if self.distribution != "normal":
-            gap = np.absolute(self.reward_parameters[self.optimal_arm] - self.reward_parameters[action])
-        else:
-            gap = np.absolute(self.reward_parameters[0][self.optimal_arm] - self.reward_parameters[0][action])
-        return gap
+        return (
+            np.absolute(
+                self.reward_parameters[self.optimal_arm]
+                - self.reward_parameters[action]
+            )
+            if self.distribution != "normal"
+            else np.absolute(
+                self.reward_parameters[0][self.optimal_arm]
+                - self.reward_parameters[0][action]
+            )
+        )
     
     def step(self, action):
         self.is_reset = False

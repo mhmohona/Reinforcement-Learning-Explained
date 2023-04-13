@@ -63,9 +63,7 @@ class WindyGridworldEnv(discrete.DiscreteEnv):
             maze[:,[6,7]] = -1
             maze[np.unravel_index(self.s, self.shape)] = 2.0
             maze[(3,7)] = 0.5
-            img = np.array(maze, copy=True)
-            return img
-       
+            return np.array(maze, copy=True)
         else:        
             outfile = StringIO() if mode == 'ansi' else sys.stdout
 

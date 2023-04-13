@@ -24,7 +24,9 @@ def plot_episode_stats(stats, smoothing_window=10, hideplot=False):
     plt.plot(rewards_smoothed)
     plt.xlabel("Episode")
     plt.ylabel("Episode Reward (Smoothed)")
-    plt.title("Episode Reward over Time (Smoothed over window size {})".format(smoothing_window))
+    plt.title(
+        f"Episode Reward over Time (Smoothed over window size {smoothing_window})"
+    )
     if hideplot:
         plt.close(fig2)
     else:
@@ -50,12 +52,14 @@ def plot_pgresults(stats, smoothing_window=20, hideplot=False):
     plt.plot(rewards_smoothed)
     plt.xlabel("Episode")
     plt.ylabel("Episode Reward (Smoothed)")
-    plt.title("Episode Reward over Time (Smoothed over window size {})".format(smoothing_window))
+    plt.title(
+        f"Episode Reward over Time (Smoothed over window size {smoothing_window})"
+    )
     if hideplot:
         plt.close(fig2)
     else:
         plt.show(fig2)
-       
+
     # Plot time steps and episode number
     fig3 = plt.figure(figsize=(10,5))
     plt.plot(stats.episode_running_variance)
@@ -66,7 +70,7 @@ def plot_pgresults(stats, smoothing_window=20, hideplot=False):
         plt.close(fig3)
     else:
         plt.show(fig3)
-        
+
     # Plot time steps and episode number
     fig4 = plt.figure(figsize=(10,5))
     plt.plot(np.arange(len(stats.episode_lengths)), np.cumsum(stats.episode_lengths))
@@ -98,12 +102,14 @@ def plot_dqnresults(stats, smoothing_window=20, hideplot=False):
     plt.plot(rewards_smoothed)
     plt.xlabel("Episode")
     plt.ylabel("Episode Reward (Smoothed)")
-    plt.title("Episode Reward over Time (Smoothed over window size {})".format(smoothing_window))
+    plt.title(
+        f"Episode Reward over Time (Smoothed over window size {smoothing_window})"
+    )
     if hideplot:
         plt.close(fig2)
     else:
         plt.show(fig2)
-              
+
     # Plot time steps and episode number
     fig4 = plt.figure(figsize=(10,5))
     plt.plot(np.arange(len(stats.episode_lengths)), np.cumsum(stats.episode_lengths))

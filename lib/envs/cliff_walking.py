@@ -77,9 +77,7 @@ class CliffWalkingEnv(discrete.DiscreteEnv):
             maze[self._cliff] = -1
             maze[np.unravel_index(self.s, self.shape)] = 2.0
             maze[(3,11)] = 0.5
-            img = np.array(maze, copy=True)
-            return img
-        
+            return np.array(maze, copy=True)
         else:
             outfile = StringIO() if mode == 'ansi' else sys.stdout
 
